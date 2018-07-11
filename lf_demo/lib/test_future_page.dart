@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lf_demo/widget1.dart';
 import 'package:lf_demo/widget2.dart';
+import 'package:lf_demo/data/data_repo.dart';
 
 class TestFuturePage extends StatefulWidget {
   TestFuturePage({Key key}) : super(key: key);
@@ -11,6 +12,12 @@ class TestFuturePage extends StatefulWidget {
 }
 
 class _TestFuturePageState extends State<TestFuturePage> {
+
+  @override
+  void initState() {
+    super.initState();
+    dataRepository.init();
+  }
 
   @override
   Widget build(BuildContext context) {
