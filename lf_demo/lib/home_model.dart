@@ -4,24 +4,47 @@ import 'home_contract.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 class HomeModel implements Model {
-
   List<Item> _items;
 
-  Map<Item,Map<int, Uint8List>> _images;
+  Map<Item, Map<int, Uint8List>> _images;
 
   @override
   Future<Item> getImageForItem(Item item) async {
     // For this tutorial, we retrieve images from assets
 
-    Map<int, Uint8List> imagesForItem = new Map<int, Uint8List>();
-
     if (item.numImages > 0) {
-      // For now, we get the first image only
-      Uint8List firstImageForItem = (await rootBundle.load('assetss/1.png')).buffer.asUint8List();
-      imagesForItem.putIfAbsent(1, () => firstImageForItem);
-      _images.putIfAbsent(item, () => imagesForItem);
-      item.currentImage = firstImageForItem;
-      item.currentImageNumber = 1;
+      // Initialise at first image
+      int imageNumberToGet = 1;
+
+      // If we already have a current image in memory, get the next one available for the item, or go back to the first one
+      if (item.currentImageNumber != null) {
+        imageNumberToGet = item.currentImageNumber + 1;
+        if (imageNumberToGet > item.numImages) {
+          imageNumberToGet = 1;
+        }
+      }
+
+      // Do we have image already?
+      if (_images.containsKey(item) &&
+          _images[item].containsKey(imageNumberToGet)) {
+        item.currentImage = _images[item][imageNumberToGet];
+        item.currentImageNumber = imageNumberToGet;
+      } else {
+        // Get image from assets
+        Uint8List imageForItem = (await rootBundle
+                .load('assetss/' + imageNumberToGet.toString() + '.png'))
+            .buffer
+            .asUint8List();
+        if (_images.containsKey(item)) {
+          _images[item].putIfAbsent(imageNumberToGet, () => imageForItem);
+        } else {
+          Map<int, Uint8List> imagesForItem = new Map<int, Uint8List>();
+          imagesForItem.putIfAbsent(imageNumberToGet, () => imageForItem);
+          _images.putIfAbsent(item, () => imagesForItem);
+        }
+        item.currentImage = imageForItem;
+        item.currentImageNumber = imageNumberToGet;
+      }
     }
 
     return item;
@@ -29,7 +52,6 @@ class HomeModel implements Model {
 
   @override
   Future<List<Item>> getItems() async {
-
     // For this tutorial, we simulate a delay as you would get when calling a backend
     await new Future.delayed(new Duration(seconds: 2));
 
@@ -54,6 +76,5 @@ class HomeModel implements Model {
     _images = new Map<Item, Map<int, Uint8List>>();
 
     return _items;
-
   }
 }

@@ -29,4 +29,6 @@ class Item {
 
 abstract class Presenter {
   Future viewDisplayed();
+
+  void viewDisposed();
 }
