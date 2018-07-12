@@ -9,16 +9,25 @@ class _DisplayPageState extends State<DisplayPage> with WidgetsBindingObserver{
   bool _isAddGradient = false;
   final int imgCounts = 5;
   var timer;
+  int curShowIndex = 0;
+  PageController _pageController = new PageController(viewportFraction: 0.85);
+  Duration duration = new Duration(milliseconds: 500);
   @override
   void initState() {
     super.initState();
     // void callback
     WidgetsBinding.instance.addObserver(this);
     print('---initstate');
-    timer = new Timer.periodic(new Duration(seconds: 1), (Timer timer){
+    timer = new Timer.periodic(new Duration(seconds: 2), (Timer timer){
       var date = new DateTime.now().millisecondsSinceEpoch;
       
-      print(date.toString()+' $date'); 
+      // print(date.toString()+' $date'); 
+      print('curshowIndex: $curShowIndex');
+      curShowIndex += 1;
+      if (curShowIndex >= imgCounts) {
+                curShowIndex = 0;
+              }
+      _pageController.animateToPage(curShowIndex, duration:duration, curve: Curves.decelerate);
     });
     
   }
@@ -59,9 +68,10 @@ class _DisplayPageState extends State<DisplayPage> with WidgetsBindingObserver{
         child: SizedBox.fromSize(
           size: Size.fromHeight(200.0),
           child: PageView.builder(
-            controller: PageController(viewportFraction: 0.85),
+            controller: _pageController,
             itemCount: imgCounts,
             itemBuilder: (BuildContext context, int index) {
+              // curShowIndex = index;
               return Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: 2.0,
@@ -87,7 +97,7 @@ class _DisplayPageState extends State<DisplayPage> with WidgetsBindingObserver{
                       fit: StackFit.expand,
                       children: [
                         Image.asset(
-                          'assetss/a' + (index+1).toString() + '.jpg',
+                          'assetss/a' + (curShowIndex+1).toString() + '.jpg',
                           fit: BoxFit.cover,
                         ),
                       ],
