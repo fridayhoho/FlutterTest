@@ -1,14 +1,51 @@
 import 'package:flutter/material.dart';
-
+import 'dart:async';
 class DisplayPage extends StatefulWidget {
   @override
   _DisplayPageState createState() => new _DisplayPageState();
 }
 
-class _DisplayPageState extends State<DisplayPage> {
+class _DisplayPageState extends State<DisplayPage> with WidgetsBindingObserver{
   bool _isAddGradient = false;
   final int imgCounts = 5;
-  ///
+  var timer;
+  @override
+  void initState() {
+    super.initState();
+    // void callback
+    WidgetsBinding.instance.addObserver(this);
+    print('---initstate');
+    timer = new Timer.periodic(new Duration(seconds: 1), (Timer timer){
+      var date = new DateTime.now().millisecondsSinceEpoch;
+      
+      print(date.toString()+' $date'); 
+    });
+    
+  }
+
+  @override
+  void deactivate() {
+    // TODO: implement deactivate
+    super.deactivate();
+    print('deactivate');
+  }
+  
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print('state:$state');
+    if (state == AppLifecycleState.paused) {
+      timer.cancel();
+    }else if(state == AppLifecycleState.resumed){
+      // timer.resume();
+    }
+  }
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+    print('dispose');
+    timer.cancel();
+  }
   ///@override
   Widget build(BuildContext context) {
     return Scaffold(
