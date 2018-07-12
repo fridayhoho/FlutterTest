@@ -18,6 +18,8 @@ class _DisplayPageState extends State<DisplayPage> with WidgetsBindingObserver, 
   final List<Tab> _bottomTabs = <Tab>[
     new Tab(text: '首页',icon: new Icon(Icons.home),),    //icon和text的显示顺序已经内定，如需自定义，到child属性里面加吧
     new Tab(icon: new Icon(Icons.mail),text: '消息',),
+    // new Tab(icon: new Icon(Icons.people),text: '邻里',),
+    new Tab(icon: new Icon(Icons.photo),text: '发现',),
     new Tab(icon: new Icon(Icons.pie_chart),text: '我的',),
   ];
 
@@ -102,23 +104,24 @@ class _DisplayPageState extends State<DisplayPage> with WidgetsBindingObserver, 
                   currentAccountPicture: new GestureDetector( //用户头像
                     onTap: () => print('current user'),
                     child: new CircleAvatar(    //圆形图标控件
-                      backgroundImage: new NetworkImage('https://upload.jianshu.io/users/upload_avatars/7700793/dbcf94ba-9e63-4fcf-aa77-361644dd5a87?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240'),//图片调取自网络
+                      backgroundImage: new ExactAssetImage('assetss/1.png'),
+                       
                     ),
                   ),
-                  otherAccountsPictures: <Widget>[    //粉丝头像
-                    new GestureDetector(    //手势探测器，可以识别各种手势，这里只用到了onTap
-                      onTap: () => print('other user'), //暂且先打印一下信息吧，以后再添加跳转页面的逻辑
-                      child: new CircleAvatar(
-                        backgroundImage: new NetworkImage('https://upload.jianshu.io/users/upload_avatars/10878817/240ab127-e41b-496b-80d6-fc6c0c99f291?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240'),
-                      ),
-                    ),
-                    new GestureDetector(
-                      onTap: () => print('other user'),
-                      child: new CircleAvatar(
-                        backgroundImage: new NetworkImage('https://upload.jianshu.io/users/upload_avatars/8346438/e3e45f12-b3c2-45a1-95ac-a608fa3b8960?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240'),
-                        ),
-                    ),
-                  ],
+                  // otherAccountsPictures: <Widget>[    //粉丝头像
+                  //   new GestureDetector(    //手势探测器，可以识别各种手势，这里只用到了onTap
+                  //     onTap: () => print('other user'), //暂且先打印一下信息吧，以后再添加跳转页面的逻辑
+                  //     child: new CircleAvatar(
+                  //       backgroundImage: new NetworkImage('https://upload.jianshu.io/users/upload_avatars/10878817/240ab127-e41b-496b-80d6-fc6c0c99f291?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240'),
+                  //     ),
+                  //   ),
+                  //   new GestureDetector(
+                  //     onTap: () => print('other user'),
+                  //     child: new CircleAvatar(
+                  //       backgroundImage: new NetworkImage('https://upload.jianshu.io/users/upload_avatars/8346438/e3e45f12-b3c2-45a1-95ac-a608fa3b8960?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240'),
+                  //       ),
+                  //   ),
+                  // ],
                   decoration: new BoxDecoration(    //用一个BoxDecoration装饰器提供背景图片
                     color: Colors.lightBlue
                     // image: new DecorationImage(
@@ -130,7 +133,7 @@ class _DisplayPageState extends State<DisplayPage> with WidgetsBindingObserver, 
                   ),
                 ),
                 new ListTile(   //第一个功能项
-                  title: new Text('First Page'),
+                  title: new Text('账户明细'),
                   trailing: new Icon(Icons.arrow_upward),
                   onTap: () {
                     Navigator.of(context).pop();
@@ -138,7 +141,7 @@ class _DisplayPageState extends State<DisplayPage> with WidgetsBindingObserver, 
                   }
                 ),
                 new ListTile(   //第二个功能项
-                  title: new Text('Second Page'),
+                  title: new Text('车位配置'),
                   trailing: new Icon(Icons.arrow_right),
                   onTap: () {
                     Navigator.of(context).pop();
@@ -146,7 +149,7 @@ class _DisplayPageState extends State<DisplayPage> with WidgetsBindingObserver, 
                   } 
                 ),
                 new ListTile(   //第二个功能项
-                  title: new Text('Second Page'),
+                  title: new Text('租金历史'),
                   trailing: new Icon(Icons.arrow_right),
                   onTap: () {
                     Navigator.of(context).pop();
@@ -155,7 +158,7 @@ class _DisplayPageState extends State<DisplayPage> with WidgetsBindingObserver, 
                 ),
                 new Divider(),    //分割线控件
                 new ListTile(   //退出按钮
-                  title: new Text('Close'),
+                  title: new Text('关闭菜单'),
                   trailing: new Icon(Icons.cancel),
                   onTap: () => Navigator.of(context).pop(),   //点击后收起侧边栏
                 ),
