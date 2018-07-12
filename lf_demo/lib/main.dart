@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import './home_page.dart';
 import './test_future_page.dart';
+import './ui/page_view.dart';
+
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
         // counter didn't reset back to zero; the application is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: new TestFuturePage(),
+      home: new DisplayPage(),
     );
   }
 }

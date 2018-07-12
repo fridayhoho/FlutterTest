@@ -43,6 +43,7 @@ class _Widget1State extends State<Widget1> {
   }
   @override
   Widget build(BuildContext context) {
+    print('widget1:build');
     return new Card(
         margin: const EdgeInsets.all(8.0),
         child: new Container(
